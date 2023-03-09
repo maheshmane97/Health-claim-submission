@@ -1,30 +1,15 @@
 package com.hnt.hcm.entity;
 
 
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,53 +19,48 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Member {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@NotBlank(message = "FirstName should not be blank###")
-	@Length(min = 5, max = 50)
-	private String firstName;
+    @NotBlank(message = "FirstName should not be blank###")
+    @Length(min = 5, max = 50)
+    private String firstName;
 
-	@NotBlank(message = "LastName should not be blank###")
-	@Length(min = 5, max = 50)
-	private String lastName;
+    @NotBlank(message = "LastName should not be blank###")
+    @Length(min = 5, max = 50)
+    private String lastName;
 
-	@NotBlank(message = "UserName should not be blank###")
-	@Size(min = 5, max = 12, message = "UserName inbetween 5 to 12 characters")
-	private String userName;
+    @NotBlank(message = "UserName should not be blank###")
+    @Size(min = 5, max = 12, message = "UserName in between 5 to 12 characters")
+    private String userName;
 
-	@NotBlank(message = "Address should not be blank###")
-	@Length(max = 100, message = "Address can upto 100 characters")
-	private String address;
+    @NotBlank(message = "Password should not be blank###")
+    @Size(min = 8, max = 12, message = "Password in between 5 to 12 characters")
+    private String password;
 
-	@NotBlank(message = "State Name should not be blank###")
-	private String state;
+    @NotBlank(message = "Address should not be blank###")
+    @Length(max = 100, message = "Address can up to 100 characters")
+    private String address;
 
-	@NotBlank(message = "City Name should not be blank###")
-	private String city;
+    @NotBlank(message = "State Name should not be blank###")
+    private String state;
 
-	@Email(message = "Please enter valid Email Id###")
-	private String emailId;
+    @NotBlank(message = "City Name should not be blank###")
+    private String city;
 
-	
-	private String dob;
+    @Email(message = "Please enter valid Email Id###")
+    private String emailId;
 
-	@OneToOne
-	private Claim claims;
+    @NotBlank
+    private String roles;
+    private String dob;
 
-	@OneToOne
-	private Physician physician;
+    @OneToMany(mappedBy = "member")
+    private List<Claim> claims;
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    @OneToOne
+    private Physician physician;
+
+
 }

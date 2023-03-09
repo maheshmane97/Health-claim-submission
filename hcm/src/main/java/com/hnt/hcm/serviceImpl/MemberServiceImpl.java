@@ -55,13 +55,13 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> getMember(String firstName, String lastName, String physicianName, Integer claimId) {
 		List<Member> list = memberRepository.findAll();
 
-		List<Member> member = list.stream()
-				.filter(e -> e.getFirstName().equalsIgnoreCase(firstName) || e.getLastName().equalsIgnoreCase(lastName)
-						|| e.getPhysician().getPhysicianName().equalsIgnoreCase(physicianName)
-						|| e.getClaims().getClaimId() == claimId)
-				.collect(Collectors.toList());
+//		List<Member> member = list.stream()
+//				.filter(e -> e.getFirstName().equalsIgnoreCase(firstName) || e.getLastName().equalsIgnoreCase(lastName)
+//						|| e.getPhysician().getPhysicianName().equalsIgnoreCase(physicianName)
+//						|| e.getClaims().getClaimId() == claimId)
+//				.collect(Collectors.toList());
 
-		return member;
+		return null;
 	}
 
 }
