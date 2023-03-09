@@ -25,7 +25,7 @@ public class PhysicianController {
 	}
 
 	@GetMapping("/ph")
-	@PreAuthorize("hasAuthority('ROLE_MEMBER')")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MEMBER')")
 	public List<Physician> getAll(){
 		return repository.findAll();
 	}

@@ -1,6 +1,8 @@
 package com.hnt.hcm.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +11,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -35,8 +38,9 @@ public class Member {
     @Size(min = 5, max = 12, message = "UserName in between 5 to 12 characters")
     private String userName;
 
-    @NotBlank(message = "Password should not be blank###")
-    @Size(min = 8, max = 12, message = "Password in between 5 to 12 characters")
+//    @NotBlank(message = "Password should not be blank###")
+//    @Size(min = 8, max = 12, message = "Password in between 5 to 12 characters")
+//    @JsonIgnore
     private String password;
 
     @NotBlank(message = "Address should not be blank###")
@@ -54,7 +58,9 @@ public class Member {
 
     @NotBlank
     private String roles;
-    private String dob;
+
+    @JsonFormat(pattern = "dd-mm-yyyy")
+    private Date dob;
 
     @OneToMany(mappedBy = "member")
     private List<Claim> claims;

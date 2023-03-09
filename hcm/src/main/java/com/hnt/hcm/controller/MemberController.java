@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/hcm")
 public class MemberController {
     @Autowired
     MemberServiceImpl memberServiceImpl;
 
-    @PostMapping("/member")
+    @PostMapping
     public ResponseEntity<?> addMember(@Valid @RequestBody Member member) {
         Member member1 = memberServiceImpl.addMember(member);
         ResponseEntity<Member> response = null;
         if (member1 != null) {
-            response = new ResponseEntity<>(HttpStatus.CREATED);
+            response = new ResponseEntity<>(member1, HttpStatus.CREATED);
         } else {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return response;
     }
 
-    @GetMapping("/mem")
+    @GetMapping("/members")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Member>> getAllMembers() {
         List<Member> list = memberServiceImpl.getAllMembers();
