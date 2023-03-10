@@ -59,7 +59,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-        return security.csrf().disable().authorizeHttpRequests().requestMatchers("/hcm","/hcm/login").permitAll()
+        return security.csrf().disable().authorizeHttpRequests().requestMatchers("/hcm","/hcm/login","/swagger-ui/**").permitAll()
                 .and().authorizeHttpRequests().requestMatchers("/hcm/**").authenticated()
                 //Form log in for Basic spring security we need to do jwt security, so we do sessionamnagement
 //                .and().formLogin()
