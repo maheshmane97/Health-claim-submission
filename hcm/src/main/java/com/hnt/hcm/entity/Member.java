@@ -68,5 +68,11 @@ public class Member {
     @OneToOne
     private Physician physician;
 
+    public Physician getPhysician() {
+        return physician;
+    }
 
+    public void setPhysician(Physician physician) {
+        this.physician = physician;
+    }
 }

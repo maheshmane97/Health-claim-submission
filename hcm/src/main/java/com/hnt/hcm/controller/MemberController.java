@@ -1,5 +1,6 @@
 package com.hnt.hcm.controller;
 
+import com.hnt.hcm.dto.MemberSearchRequest;
 import com.hnt.hcm.entity.Member;
 import com.hnt.hcm.serviceImpl.MemberServiceImpl;
 import jakarta.validation.Valid;
@@ -47,6 +48,18 @@ public class MemberController {
     public ResponseEntity<List<Member>> findMember(@RequestParam String firstName, @RequestParam String lastName,
                                                    @RequestParam String physicianName, @RequestParam Integer claimId) {
         List<Member> list = memberServiceImpl.getMember(firstName, lastName, physicianName, claimId);
+        ResponseEntity<List<Member>> response = null;
+        if (!list.isEmpty()) {
+            response = new ResponseEntity<>(list, HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return response;
+    }
+
+    @GetMapping("/membersearch")
+    public ResponseEntity<List<Member>> findMember(@RequestBody MemberSearchRequest request) {
+        List<Member> list = memberServiceImpl.retrieveMember(request);
         ResponseEntity<List<Member>> response = null;
         if (!list.isEmpty()) {
             response = new ResponseEntity<>(list, HttpStatus.OK);

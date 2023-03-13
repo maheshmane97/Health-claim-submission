@@ -1,23 +1,23 @@
 package com.hnt.hcm.serviceImpl;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
+import com.hnt.hcm.customExceptions.InputFieldException;
+import com.hnt.hcm.dto.MemberSearchRequest;
+import com.hnt.hcm.entity.Claim;
 import com.hnt.hcm.entity.Member;
 import com.hnt.hcm.entity.Physician;
 import com.hnt.hcm.repository.ClaimRepository;
 import com.hnt.hcm.repository.MemberRepository;
 import com.hnt.hcm.repository.PhysicianRepository;
 import com.hnt.hcm.service.MemberService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -72,6 +72,27 @@ public class MemberServiceImpl implements MemberService {
 //				.collect(Collectors.toList());
 
         return null;
+    }
+
+    @Override
+    public List<Member> retrieveMember(MemberSearchRequest request) {
+        List<Member> collect = new ArrayList<>();
+        if (request == null) {
+            throw new InputFieldException("At least one field Required to search Member..!");
+        } else {
+            List<Member> list = memberRepository.findAll();
+            list.stream().filter(e ->
+                    e.getFirstName().equalsIgnoreCase(request.getFirstName()) && e.getLastName().equalsIgnoreCase(request.getLastName()) ||
+                            e.getPhysician().getPhysicianName().equalsIgnoreCase(request.getPhysicianName()) ||
+                            e.getId() == request.getMemberId()
+            ).collect(Collectors.toList());
+            return collect;
+        }
+
+    }
+
+    public Claim getClaimWrtMember(Integer claimId) {
+        return claimRepo.findByClaimId(claimId);
     }
 
 }
